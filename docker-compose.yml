@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    stdin_open: true
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - node-backend
+      - project-service
+      - analytics-service
+
+  node-backend:
+    build:
+      context: ./node-backend
+    container_name: node-backend
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/taskmanager
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+
+  project-service:
+    build:
+      context: ./project-service
+    container_name: project-service
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  notification-service:
+    build:
+      context: ./notification-service
+    container_name: notification-service
+    ports:
+      - "8082:8082"
+
+  analytics-service:
+    build:
+      context: ./analytics-service
+    container_name: analytics-service
+    environment:
+      - DATABASE_URL=postgres://user:password@postgres:5432/analytics_db
+    ports:
+      - "4567:4567"
+    depends_on:
+      - postgres
+
+  mongo:
+    image: mongo:4.4
+    container_name: mongo
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: analytics_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  mongo_data:
+  postgres_data:
