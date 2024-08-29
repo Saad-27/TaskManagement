@@ -27,6 +27,16 @@ const TaskDetail = () => {
       });
   };
 
+  const handleComplete = () => {
+    axios.post(`/api/tasks/${id}/complete`)
+      .then(() => {
+        setTask({ ...task, status: 'completed' });
+      })
+      .catch(error => {
+        console.error('There was an error marking the task as complete!', error);
+      });
+  };
+
   if (!task) return <div>Loading...</div>;
 
   return (
@@ -37,6 +47,9 @@ const TaskDetail = () => {
       <p>Deadline: {new Date(task.deadline).toLocaleString()}</p>
       <button onClick={handleDelete}>Delete Task</button>
       <Link to={`/tasks/${id}/edit`}>Edit Task</Link>
+      {task.status !== 'completed' && (
+        <button onClick={handleComplete}>Mark as Complete</button>
+      )}
     </div>
   );
 };

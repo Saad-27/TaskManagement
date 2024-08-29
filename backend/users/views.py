@@ -59,14 +59,16 @@ class TaskDetailView(View):
 from django.http import JsonResponse
 from django.views import View
 from .models import Task
-from django.utils import timezone
+from .utils import send_notification
 
-class CompletedTasksView(View):
-    def get(self, request):
-        completed_tasks_count = Task.objects.filter(status='completed').count()
-        return JsonResponse({'count': completed_tasks_count})
+class TaskCompleteView(View):
+    def post(self, request, task_id):
+        task = Task.objects.get(id=task_id)
+        task.status = 'completed'
+        task.save()
+        return JsonResponse({'message': 'Task marked as complete'})
 
 class OverdueTasksView(View):
     def get(self, request):
-        overdue_tasks_count = Task.objects.filter(deadline__lt=timezone.now(), status__ne='completed').count()
-        return JsonResponse({'count': overdue_tasks_count})
+        overdue_tasks = Task.objects.filter(status='overdue')
+        return JsonResponse({'tasks': list(overdue_tasks.values())})

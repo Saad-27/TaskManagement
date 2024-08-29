@@ -19,6 +19,9 @@ const Home = () => {
                   <Link to="/projects/new">Create Project</Link>
                 </li>
                 <li>
+                  <Link to="/tasks">Manage Tasks</Link>
+                </li>
+                <li>
                   <button className="logout-button" onClick={() => {
                     localStorage.removeItem('token');
                     window.location.href = '/';
