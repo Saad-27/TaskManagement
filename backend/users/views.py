@@ -55,3 +55,18 @@ class TaskCreateView(View):
 class TaskDetailView(View):
     def get(self, request, task_id):
         return render(request, 'tasks/task_detail.html', {'task_id': task_id})
+
+from django.http import JsonResponse
+from django.views import View
+from .models import Task
+from django.utils import timezone
+
+class CompletedTasksView(View):
+    def get(self, request):
+        completed_tasks_count = Task.objects.filter(status='completed').count()
+        return JsonResponse({'count': completed_tasks_count})
+
+class OverdueTasksView(View):
+    def get(self, request):
+        overdue_tasks_count = Task.objects.filter(deadline__lt=timezone.now(), status__ne='completed').count()
+        return JsonResponse({'count': overdue_tasks_count})
