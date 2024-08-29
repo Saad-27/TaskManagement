@@ -46,7 +46,7 @@ const TaskForm = () => {
       const notification = {
         task_id: task._id,
         message: `Task ${id ? 'updated' : 'created'}: ${task.title} has been assigned to project ${task.projectId}`,
-        recipient: 'user@example.com', // Replace with actual recipient
+        recipient: 'user@example.com', // Replace with actual recipient, or make a dictionary of users and their emails  
         type: 'email', 
       };
       axios.post('http://localhost:8082/api/notifications', notification)
