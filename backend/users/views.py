@@ -72,3 +72,8 @@ class OverdueTasksView(View):
     def get(self, request):
         overdue_tasks = Task.objects.filter(status='overdue')
         return JsonResponse({'tasks': list(overdue_tasks.values())})
+
+class CompletedTasksView(View):
+    def get(self, request):
+        completed_tasks = Task.objects.filter(status='completed')
+        return JsonResponse({'tasks': list(completed_tasks.values())})
