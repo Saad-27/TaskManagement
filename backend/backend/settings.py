@@ -139,7 +139,8 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://localhost:3000",  # React frontend
+    "http://localhost:5000",  # Express backend
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'  # Assuming you have a custom user model
