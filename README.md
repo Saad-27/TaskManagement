@@ -20,6 +20,12 @@ This project is a Task Management Application that allows users to manage tasks 
 - **Port**: 5000
 - **Dockerfile**: `node-backend/Dockerfile`
 - **Database**: MongoDB
+  
+- **Framework**: Django
+- **Description**: Handles task-related operations.
+- **Port**: 8000
+- **Dockerfile**: `backend/Dockerfile`
+- **Database**: PostgreSQL
 
 ### 3. Project Service
 - **Framework**: Spring Boot
