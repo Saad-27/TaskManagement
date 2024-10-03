@@ -2,7 +2,7 @@
 
 This project is a Task Management Application that allows users to manage tasks and projects. It includes several microservices, each responsible for different functionalities.
 
-## Microservices
+## Microservices Overview
 
 ### 1. Frontend
 - **Framework**: React
@@ -14,33 +14,34 @@ This project is a Task Management Application that allows users to manage tasks 
   - `ProjectForm.js`: Handles project creation.
   - `AnalyticsDashboard.js`: Displays analytics data.
 
-### 2. Node Backend
+### 2. Node Backend (Express)
 - **Framework**: Express.js
 - **Description**: Handles task-related operations.
 - **Port**: 5000
 - **Dockerfile**: `node-backend/Dockerfile`
 - **Database**: MongoDB
-  
-- **Framework**: Express
-- **Description**: Handles task-related operations.
-- **Port**: 8000
-- **Dockerfile**: `backend/Dockerfile`
-- **Database**: PostgreSQL
 
-### 3. Project Service
+### 3. Django Backend (User Management)
+- **Framework**: Django REST Framework
+- **Description**: Manages user registration, authentication, and profile management.
+- **Port**: 8000
+- **Dockerfile**: `django-backend/Dockerfile`
+- **Database**: PostgreSQL (or any database you choose)
+
+### 4. Project Service
 - **Framework**: Spring Boot
 - **Description**: Manages projects.
 - **Port**: 8080
 - **Dockerfile**: `project-service/Dockerfile`
 - **Database**: H2 (in-memory)
 
-### 4. Notification Service
+### 5. Notification Service
 - **Framework**: Gin (Go)
 - **Description**: Sends notifications for task updates, deadlines, or reminders.
 - **Port**: 8082
 - **Dockerfile**: `notification-service/Dockerfile`
 
-### 5. Analytics Service
+### 6. Analytics Service
 - **Framework**: Sinatra (Ruby)
 - **Description**: Tracks and generates reports on task and project metrics.
 - **Port**: 4567
@@ -57,22 +58,3 @@ The `docker-compose.yml` file orchestrates the different services and their resp
    ```sh
    git clone "https://github.com/Saad-27/TaskManagementApp"
    cd TaskManagementApp
-   ```
-
-2. **Build and run the services**:
-   ```sh
-   docker-compose up --build
-   ```
-3. **Access the application**:
-   - Frontend: [http://localhost:3000](http://localhost:3000)
-   - Node Backend: [http://localhost:5000](http://localhost:5000)
-   - Project Service: [http://localhost:8080](http://localhost:8080)
-   - Notification Service: [http://localhost:8082](http://localhost:8082)
-   - Analytics Service: [http://localhost:4567](http://localhost:4567)
-
-## Important Notes
-
-- Ensure Docker and Docker Compose are installed on your machine.
-- The frontend communicates with the backend services using Axios.
-- The Notification Service uses Gin to handle HTTP requests and send notifications.
-- The Analytics Service uses Sinatra to handle HTTP requests and interacts with PostgreSQL.
