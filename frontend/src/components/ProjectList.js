@@ -6,12 +6,13 @@ const ProjectList = () => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/projects')
+    // Fetch the list of projects from the Django backend
+    axios.get('http://localhost:8000/api/projects/')
       .then(response => {
         setProjects(response.data);
       })
       .catch(error => {
-        console.error('There was an error fetching the projects!', error);
+        console.error('Error fetching projects:', error);
       });
   }, []);
 
@@ -22,6 +23,7 @@ const ProjectList = () => {
       <ul>
         {projects.map(project => (
           <li key={project.id}>
+            {/* Link to the project-specific task page */}
             <Link to={`/projects/${project.id}/tasks`}>{project.name}</Link>
           </li>
         ))}
