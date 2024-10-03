@@ -14,12 +14,14 @@ const ProjectForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8080/api/projects', formData)  // Update the base URL if necessary
+    // Send project creation request to Django backend
+    axios.post('http://localhost:8000/api/projects/', formData)
       .then(() => {
+        // Redirect to project list after successful creation
         navigate('/projects');
       })
       .catch(error => {
-        console.error('There was an error creating the project!', error);
+        console.error('Error creating project:', error);
       });
   };
 
@@ -27,7 +29,14 @@ const ProjectForm = () => {
     <div>
       <h1>Create Project</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Project Name" required />
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Project Name"
+          required
+        />
         <button type="submit">Create Project</button>
       </form>
     </div>
