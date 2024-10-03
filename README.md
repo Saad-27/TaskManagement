@@ -21,7 +21,7 @@ This project is a Task Management Application that allows users to manage tasks 
 - **Dockerfile**: `node-backend/Dockerfile`
 - **Database**: MongoDB
   
-- **Framework**: Django
+- **Framework**: Express
 - **Description**: Handles task-related operations.
 - **Port**: 8000
 - **Dockerfile**: `backend/Dockerfile`
