@@ -6,30 +6,33 @@ const TaskManagement = () => {
   const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
 
+  // Log out user and redirect to home page
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/');
   };
 
+  // Fetch all tasks when component loads
   useEffect(() => {
-    axios.get('/api/tasks')
+    axios.get('http://localhost:8000/api/tasks/')
       .then(response => {
         setTasks(response.data);
       })
       .catch(error => {
-        console.error('There was an error fetching the tasks!', error);
+        console.error('Error fetching tasks:', error);
       });
   }, []);
 
+  // Mark a task as complete
   const handleComplete = (taskId) => {
-    axios.post(`/api/tasks/${taskId}/complete`)
+    axios.post(`http://localhost:8000/api/tasks/${taskId}/complete/`)
       .then(() => {
-        setTasks(tasks.map(task => 
-          task._id === taskId ? { ...task, status: 'completed' } : task
+        setTasks(tasks.map(task =>
+          task.id === taskId ? { ...task, status: 'completed' } : task
         ));
       })
       .catch(error => {
-        console.error('There was an error marking the task as complete!', error);
+        console.error('Error marking task as complete:', error);
       });
   };
 
@@ -54,10 +57,10 @@ const TaskManagement = () => {
         <Link to="/tasks/new">Create New Task</Link>
         <ul>
           {tasks.map(task => (
-            <li key={task._id}>
-              <Link to={`/tasks/${task._id}`}>{task.title}</Link>
+            <li key={task.id}>
+              <Link to={`/tasks/${task.id}`}>{task.title}</Link>
               {task.status !== 'completed' && (
-                <button onClick={() => handleComplete(task._id)}>Mark as Complete</button>
+                <button onClick={() => handleComplete(task.id)}>Mark as Complete</button>
               )}
             </li>
           ))}
